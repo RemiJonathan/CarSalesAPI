@@ -338,3 +338,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/CarSalesAPI/Content
+/CarSalesAPI/App_Start/BundleConfig.cs
+/CarSalesAPI/App_Start/FilterConfig.cs
+/CarSalesAPI/App_Start/RouteConfig.cs
+/CarSalesAPI/fonts
+/CarSalesAPI/Scripts
+/CarSalesAPI/Views
