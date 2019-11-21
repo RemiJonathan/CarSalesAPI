@@ -11,7 +11,7 @@ namespace CarSalesAPI.Controllers
     public class CustomerController : ApiController
     {
         // GET api/<controller>
-        [Route("api2/GetCustomers")]
+        [Route("api2/Customer")]
         [HttpGet]
         public HttpResponseMessage Get()
         {
@@ -19,7 +19,7 @@ namespace CarSalesAPI.Controllers
         }
 
         // GET api/<controller>/5
-        [Route("api2/GetCustomer/{id?}")]
+        [Route("api2/Customer/{id?}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
@@ -27,7 +27,7 @@ namespace CarSalesAPI.Controllers
         }
 
         // POST api/<controller>
-        [Route("api2/AddCustomer")]
+        [Route("api2/Customer")]
         [HttpPost]
         public HttpResponseMessage Post([FromBody]string value)
         {
@@ -35,7 +35,7 @@ namespace CarSalesAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        [Route("api2/UpdateCustomer/{id?}")]
+        [Route("api2/Customer/{id?}")]
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]ApiCustomer newCustomer)
         {/*
@@ -54,7 +54,7 @@ namespace CarSalesAPI.Controllers
         }
 
         // DELETE api/<controller>/5
-        [Route("api2/DeleteCustomer/{id?}")]
+        [Route("api2/Customer/{id?}")]
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
