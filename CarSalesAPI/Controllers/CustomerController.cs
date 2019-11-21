@@ -1,5 +1,4 @@
-﻿using DatabaseEntitiesLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,53 +11,34 @@ namespace CarSalesAPI.Controllers
     {
         // GET api/<controller>
         [Route("api2/GetCustomers")]
-        [HttpGet]
-        public HttpResponseMessage Get()
+        public IEnumerable<string> Get()
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
         [Route("api2/GetCustomer/{id?}")]
-        [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public string Get(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return "value";
         }
 
         // POST api/<controller>
         [Route("api2/AddCustomer")]
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody]string value)
+        public void Post([FromBody]string value)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // PUT api/<controller>/5
         [Route("api2/UpdateCustomer/{id?}")]
-        [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody]ApiCustomer newCustomer)
-        {/*
-            var entity = dbContext.Customer.FirstOrDefault(x => x.CustomerId == id);
-            if (entity == null)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Customer with Id " + id.ToString() + " not found to update");
-            }
-
-            PropertyCopier<Customer, ApiCustomer>.Copy(entity, newCustomer);
-            dbContext.SaveChanges();
-            return Request.CreateResponse(HttpStatusCode.OK, entity);
-            */
-            return Request.CreateResponse(HttpStatusCode.OK);
+        public void Put(int id, [FromBody]string value)
+        {
         }
 
         // DELETE api/<controller>/5
         [Route("api2/DeleteCustomer/{id?}")]
-        [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public void Delete(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

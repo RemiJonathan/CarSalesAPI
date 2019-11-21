@@ -17,26 +17,26 @@ namespace CarSalesAPI.Controllers
         }
 
         // GET api/<controller>/5
-        [Route("api2/Location/GetLocation/{id?}")]
+        [Route("api2/GetLocation/{id?}")]
         public string Get(int id)
         {
             return "value";
         }
 
         // POST api/<controller>
-        [Route("api2/Location/AddLocation")]
+        [Route("api2/AddLocation")]
         public void Post([FromBody]string value)
         {
         }
 
         // PUT api/<controller>/5
-        [Route("api2/Location/UpdateLocation/{id?}")]
+        [Route("api2/UpdateLocation/{id?}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE api/<controller>/5
-        [Route("api2/Location/DeleteLocation/{id?}")]
+        [Route("api2/DeleteLocation/{id?}")]
         public void Delete(int id)
         {
         }
