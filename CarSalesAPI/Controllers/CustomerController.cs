@@ -92,6 +92,10 @@ namespace CarSalesAPI.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
+            var entity = db.Customers.Find(id);
+
+            if (entity == null) return Request.CreateResponse(HttpStatusCode.NotFound, "That Customer ID doesn't exist.");
+            
             db.Customers.Find(id).CustomerIsActive = false;
             db.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.OK);
