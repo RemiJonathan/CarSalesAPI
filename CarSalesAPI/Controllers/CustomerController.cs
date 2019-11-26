@@ -62,9 +62,21 @@ namespace CarSalesAPI.Controllers
         // POST api/<controller>
         [Route("api2/Customer")]
         [HttpPost]
-        public HttpResponseMessage Post([FromBody]string value)
+        public HttpResponseMessage Post([FromBody]ApiCustomer newCustomer)
         {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            try
+            { 
+                Customer c = new Customer();
+                PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, c);
+                db.Customers.Add(c);
+                db.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                    "Cannot add new Customer, Try again.");
+            }
         }
 
         // PUT api/<controller>/5
