@@ -9,6 +9,8 @@ namespace CarSalesAPI.Controllers
 {
     public class SalespersonController : ApiController
     {
+        CarSalesDBEntities db = new CarSalesDBEntities();
+
         // GET api/<controller>
         [Route("api2/Salespersons")]
         [HttpGet]
