@@ -92,6 +92,8 @@ namespace CarSalesAPI.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
+            db.Customers.Find(id).CustomerIsActive = false;
+            db.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
