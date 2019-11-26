@@ -4,22 +4,22 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CarSalesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CarSalesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
           </Key>
           <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerFName" Type="varchar" MaxLength="50" />
-          <Property Name="CustomerLName" Type="varchar" MaxLength="50" />
-          <Property Name="CustomerEmail" Type="varchar" MaxLength="75" />
-          <Property Name="CustomerPhone" Type="varchar" MaxLength="15" />
-          <Property Name="CustomerAddressCivicNo" Type="varchar" MaxLength="15" />
-          <Property Name="CustomerAddressStreetName" Type="varchar" MaxLength="75" />
-          <Property Name="CustomerAddressAppartment" Type="varchar" MaxLength="10" />
-          <Property Name="CustomerAddressCity" Type="varchar" MaxLength="50" />
-          <Property Name="CustomerAddressProvince" Type="nchar" MaxLength="2" />
-          <Property Name="CustomerAddressPostalCode" Type="varchar" MaxLength="7" />
+          <Property Name="CustomerFname" Type="varchar" MaxLength="10" />
+          <Property Name="CustomerLname" Type="varchar" MaxLength="20" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="5" />
+          <Property Name="CustomerPhone" Type="varchar" MaxLength="30" />
+          <Property Name="CustomerCivicNo" Type="varchar" MaxLength="10" />
+          <Property Name="CustomerStreetName" Type="varchar" MaxLength="20" />
+          <Property Name="CustomerAppartment" Type="varchar" MaxLength="5" />
+          <Property Name="CustomerCity" Type="varchar" MaxLength="30" />
+          <Property Name="CustomerProvince" Type="varchar" MaxLength="2" />
+          <Property Name="CustomerPostalCode" Type="varchar" MaxLength="6" />
           <Property Name="CustomerIsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Location">
@@ -27,13 +27,13 @@
             <PropertyRef Name="LocationId" />
           </Key>
           <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LocationAddressCivicNo" Type="varchar" MaxLength="15" />
-          <Property Name="LocationAddressStreetName" Type="varchar" MaxLength="75" />
-          <Property Name="LocationAddressAppartment" Type="varchar" MaxLength="10" />
-          <Property Name="LocationAddressCIty" Type="varchar" MaxLength="50" />
-          <Property Name="LocationAddressProvince" Type="nchar" MaxLength="2" />
-          <Property Name="LocationAddressPostalCode" Type="varchar" MaxLength="7" />
-          <Property Name="LocationIsActive" Type="bit" Nullable="false" />
+          <Property Name="LocationAddressCivicNo" Type="varchar" MaxLength="10" />
+          <Property Name="LocationAddressStreetName" Type="varchar" MaxLength="20" />
+          <Property Name="LocationAddressAppartment" Type="varchar" MaxLength="5" />
+          <Property Name="LocationAddressCity" Type="varchar" MaxLength="30" />
+          <Property Name="LocationAddressProvince" Type="varchar" MaxLength="2" />
+          <Property Name="LocationAddressPostalCode" Type="varchar" MaxLength="6" />
+          <Property Name="LocationIsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -42,39 +42,39 @@
           <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="SalespersonId" Type="int" Nullable="false" />
-          <Property Name="VechicleId" Type="int" Nullable="false" />
+          <Property Name="VehicleId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Salesperson">
           <Key>
             <PropertyRef Name="SalespersonId" />
           </Key>
           <Property Name="SalespersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SalespersonFname" Type="varchar" MaxLength="75" />
-          <Property Name="SalespersonLname" Type="varchar" MaxLength="75" />
-          <Property Name="SalespersonEmail" Type="varchar" MaxLength="75" />
-          <Property Name="SalespersonPhone" Type="varchar" MaxLength="75" />
-          <Property Name="SalespersonAddressCivicNo" Type="varchar" MaxLength="15" />
-          <Property Name="SalespersonAddressStreetName" Type="varchar" MaxLength="75" />
-          <Property Name="SalespersonAddressAppartment" Type="varchar" MaxLength="10" />
-          <Property Name="SalespersonAddressCity" Type="varchar" MaxLength="50" />
-          <Property Name="SalespersonAddressProvince" Type="nchar" MaxLength="2" />
-          <Property Name="SalespersonAddressPostalCode" Type="varchar" MaxLength="7" />
+          <Property Name="SalespersonFname" Type="varchar" MaxLength="10" />
+          <Property Name="SalespersonLname" Type="varchar" MaxLength="20" />
+          <Property Name="SalespersonEmail" Type="varchar" MaxLength="5" />
+          <Property Name="SalespersonPhone" Type="varchar" MaxLength="30" />
+          <Property Name="SalespersonCivicNo" Type="varchar" MaxLength="10" />
+          <Property Name="SalespersonStreetName" Type="varchar" MaxLength="20" />
+          <Property Name="SalespersonAppartment" Type="varchar" MaxLength="5" />
+          <Property Name="SalespersonCity" Type="varchar" MaxLength="30" />
+          <Property Name="SalespersonProvince" Type="varchar" MaxLength="2" />
+          <Property Name="SalespersonPostalCode" Type="varchar" MaxLength="6" />
           <Property Name="LocationId" Type="int" Nullable="false" />
-          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="SalespersonIsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Vehicle">
           <Key>
             <PropertyRef Name="VehicleId" />
           </Key>
           <Property Name="VehicleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VehicleModel" Type="varchar" MaxLength="35" />
-          <Property Name="VehicleYear" Type="nchar" MaxLength="4" />
-          <Property Name="VehicleManufacturer" Type="varchar" MaxLength="75" />
-          <Property Name="VehicleDescription" Type="varchar" MaxLength="150" />
-          <Property Name="VehiclePrice" Type="float" />
-          <Property Name="Commission" Type="float" />
+          <Property Name="VehicleModel" Type="varchar" MaxLength="10" />
+          <Property Name="VehicleYear" Type="varchar" MaxLength="4" />
+          <Property Name="VehicleManufacturer" Type="varchar" MaxLength="20" />
+          <Property Name="VehicleDescription" Type="varchar" MaxLength="100" />
+          <Property Name="VehiclePrice" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="Commission" Type="numeric" Precision="4" Scale="2" />
           <Property Name="Stock" Type="int" />
-          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="VehicleIsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Sale_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
@@ -108,23 +108,11 @@
               <PropertyRef Name="VehicleId" />
             </Principal>
             <Dependent Role="Sale">
-              <PropertyRef Name="VechicleId" />
+              <PropertyRef Name="VehicleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Salesperson_Location">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
-          <End Role="Salesperson" Type="Self.Salesperson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationId" />
-            </Principal>
-            <Dependent Role="Salesperson">
-              <PropertyRef Name="LocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="CarSalesModelStoreContainer">
+        <EntityContainer Name="CarSalesDBModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
@@ -142,31 +130,27 @@
             <End Role="Vehicle" EntitySet="Vehicle" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
-          <AssociationSet Name="FK_Salesperson_Location" Association="Self.FK_Salesperson_Location">
-            <End Role="Location" EntitySet="Location" />
-            <End Role="Salesperson" EntitySet="Salesperson" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="CarSalesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CarSalesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
           </Key>
           <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerFName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerLName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerEmail" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerAddressCivicNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerAddressStreetName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerAddressAppartment" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerAddressCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerAddressProvince" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="CustomerAddressPostalCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerFname" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerLname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerCivicNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerAppartment" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerCity" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerProvince" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerPostalCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="CustomerIsActive" Type="Boolean" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Customer" FromRole="Customer" ToRole="Sale" />
         </EntityType>
@@ -175,14 +159,13 @@
             <PropertyRef Name="LocationId" />
           </Key>
           <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LocationAddressCivicNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="LocationAddressStreetName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="LocationAddressAppartment" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="LocationAddressCIty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LocationAddressProvince" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="LocationAddressPostalCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="LocationIsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Salespersons" Relationship="Self.FK_Salesperson_Location" FromRole="Location" ToRole="Salesperson" />
+          <Property Name="LocationAddressCivicNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LocationAddressStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LocationAddressAppartment" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LocationAddressCity" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationAddressProvince" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LocationAddressPostalCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="LocationIsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -191,7 +174,7 @@
           <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <Property Name="SalespersonId" Type="Int32" Nullable="false" />
-          <Property Name="VechicleId" Type="Int32" Nullable="false" />
+          <Property Name="VehicleId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Sale_Customer" FromRole="Sale" ToRole="Customer" />
           <NavigationProperty Name="Salesperson" Relationship="Self.FK_Sale_Salesperson" FromRole="Sale" ToRole="Salesperson" />
           <NavigationProperty Name="Vehicle" Relationship="Self.FK_Sale_Vehicle" FromRole="Sale" ToRole="Vehicle" />
@@ -201,19 +184,18 @@
             <PropertyRef Name="SalespersonId" />
           </Key>
           <Property Name="SalespersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SalespersonFname" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonLname" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonEmail" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonPhone" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonAddressCivicNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonAddressStreetName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonAddressAppartment" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonAddressCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonAddressProvince" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="SalespersonAddressPostalCode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonFname" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonLname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonEmail" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonCivicNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonAppartment" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonCity" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonProvince" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonPostalCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="LocationId" Type="Int32" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="Self.FK_Salesperson_Location" FromRole="Salesperson" ToRole="Location" />
+          <Property Name="SalespersonIsActive" Type="Boolean" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Salesperson" FromRole="Salesperson" ToRole="Sale" />
         </EntityType>
         <EntityType Name="Vehicle">
@@ -221,14 +203,14 @@
             <PropertyRef Name="VehicleId" />
           </Key>
           <Property Name="VehicleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VehicleModel" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="VehicleYear" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
-          <Property Name="VehicleManufacturer" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="VehicleDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="VehiclePrice" Type="Double" />
-          <Property Name="Commission" Type="Double" />
+          <Property Name="VehicleModel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleManufacturer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VehiclePrice" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Commission" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="Stock" Type="Int32" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="VehicleIsActive" Type="Boolean" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sale_Vehicle" FromRole="Vehicle" ToRole="Sale" />
         </EntityType>
         <Association Name="FK_Sale_Customer">
@@ -240,18 +222,6 @@
             </Principal>
             <Dependent Role="Sale">
               <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Salesperson_Location">
-          <End Role="Location" Type="Self.Location" Multiplicity="1" />
-          <End Role="Salesperson" Type="Self.Salesperson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationId" />
-            </Principal>
-            <Dependent Role="Salesperson">
-              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -275,11 +245,11 @@
               <PropertyRef Name="VehicleId" />
             </Principal>
             <Dependent Role="Sale">
-              <PropertyRef Name="VechicleId" />
+              <PropertyRef Name="VehicleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CarSalesEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CarSalesDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
@@ -288,10 +258,6 @@
           <AssociationSet Name="FK_Sale_Customer" Association="Self.FK_Sale_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Sale" EntitySet="Sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Salesperson_Location" Association="Self.FK_Salesperson_Location">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="Salesperson" EntitySet="Salespersons" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_Salesperson" Association="Self.FK_Sale_Salesperson">
             <End Role="Salesperson" EntitySet="Salespersons" />
@@ -307,33 +273,33 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CarSalesModelStoreContainer" CdmEntityContainer="CarSalesEntities">
+        <EntityContainerMapping StorageEntityContainer="CarSalesDBModelStoreContainer" CdmEntityContainer="CarSalesDBEntities">
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="CarSalesModel.Customer">
+            <EntityTypeMapping TypeName="CarSalesDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="CustomerFName" ColumnName="CustomerFName" />
-                <ScalarProperty Name="CustomerLName" ColumnName="CustomerLName" />
+                <ScalarProperty Name="CustomerFname" ColumnName="CustomerFname" />
+                <ScalarProperty Name="CustomerLname" ColumnName="CustomerLname" />
                 <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
                 <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
-                <ScalarProperty Name="CustomerAddressCivicNo" ColumnName="CustomerAddressCivicNo" />
-                <ScalarProperty Name="CustomerAddressStreetName" ColumnName="CustomerAddressStreetName" />
-                <ScalarProperty Name="CustomerAddressAppartment" ColumnName="CustomerAddressAppartment" />
-                <ScalarProperty Name="CustomerAddressCity" ColumnName="CustomerAddressCity" />
-                <ScalarProperty Name="CustomerAddressProvince" ColumnName="CustomerAddressProvince" />
-                <ScalarProperty Name="CustomerAddressPostalCode" ColumnName="CustomerAddressPostalCode" />
+                <ScalarProperty Name="CustomerCivicNo" ColumnName="CustomerCivicNo" />
+                <ScalarProperty Name="CustomerStreetName" ColumnName="CustomerStreetName" />
+                <ScalarProperty Name="CustomerAppartment" ColumnName="CustomerAppartment" />
+                <ScalarProperty Name="CustomerCity" ColumnName="CustomerCity" />
+                <ScalarProperty Name="CustomerProvince" ColumnName="CustomerProvince" />
+                <ScalarProperty Name="CustomerPostalCode" ColumnName="CustomerPostalCode" />
                 <ScalarProperty Name="CustomerIsActive" ColumnName="CustomerIsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="CarSalesModel.Location">
+            <EntityTypeMapping TypeName="CarSalesDBModel.Location">
               <MappingFragment StoreEntitySet="Location">
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="LocationAddressCivicNo" ColumnName="LocationAddressCivicNo" />
                 <ScalarProperty Name="LocationAddressStreetName" ColumnName="LocationAddressStreetName" />
                 <ScalarProperty Name="LocationAddressAppartment" ColumnName="LocationAddressAppartment" />
-                <ScalarProperty Name="LocationAddressCIty" ColumnName="LocationAddressCIty" />
+                <ScalarProperty Name="LocationAddressCity" ColumnName="LocationAddressCity" />
                 <ScalarProperty Name="LocationAddressProvince" ColumnName="LocationAddressProvince" />
                 <ScalarProperty Name="LocationAddressPostalCode" ColumnName="LocationAddressPostalCode" />
                 <ScalarProperty Name="LocationIsActive" ColumnName="LocationIsActive" />
@@ -341,36 +307,36 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="CarSalesModel.Sale">
+            <EntityTypeMapping TypeName="CarSalesDBModel.Sale">
               <MappingFragment StoreEntitySet="Sale">
                 <ScalarProperty Name="SaleId" ColumnName="SaleId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="SalespersonId" ColumnName="SalespersonId" />
-                <ScalarProperty Name="VechicleId" ColumnName="VechicleId" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Salespersons">
-            <EntityTypeMapping TypeName="CarSalesModel.Salesperson">
+            <EntityTypeMapping TypeName="CarSalesDBModel.Salesperson">
               <MappingFragment StoreEntitySet="Salesperson">
                 <ScalarProperty Name="SalespersonId" ColumnName="SalespersonId" />
                 <ScalarProperty Name="SalespersonFname" ColumnName="SalespersonFname" />
                 <ScalarProperty Name="SalespersonLname" ColumnName="SalespersonLname" />
                 <ScalarProperty Name="SalespersonEmail" ColumnName="SalespersonEmail" />
                 <ScalarProperty Name="SalespersonPhone" ColumnName="SalespersonPhone" />
-                <ScalarProperty Name="SalespersonAddressCivicNo" ColumnName="SalespersonAddressCivicNo" />
-                <ScalarProperty Name="SalespersonAddressStreetName" ColumnName="SalespersonAddressStreetName" />
-                <ScalarProperty Name="SalespersonAddressAppartment" ColumnName="SalespersonAddressAppartment" />
-                <ScalarProperty Name="SalespersonAddressCity" ColumnName="SalespersonAddressCity" />
-                <ScalarProperty Name="SalespersonAddressProvince" ColumnName="SalespersonAddressProvince" />
-                <ScalarProperty Name="SalespersonAddressPostalCode" ColumnName="SalespersonAddressPostalCode" />
+                <ScalarProperty Name="SalespersonCivicNo" ColumnName="SalespersonCivicNo" />
+                <ScalarProperty Name="SalespersonStreetName" ColumnName="SalespersonStreetName" />
+                <ScalarProperty Name="SalespersonAppartment" ColumnName="SalespersonAppartment" />
+                <ScalarProperty Name="SalespersonCity" ColumnName="SalespersonCity" />
+                <ScalarProperty Name="SalespersonProvince" ColumnName="SalespersonProvince" />
+                <ScalarProperty Name="SalespersonPostalCode" ColumnName="SalespersonPostalCode" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SalespersonIsActive" ColumnName="SalespersonIsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Vehicles">
-            <EntityTypeMapping TypeName="CarSalesModel.Vehicle">
+            <EntityTypeMapping TypeName="CarSalesDBModel.Vehicle">
               <MappingFragment StoreEntitySet="Vehicle">
                 <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
                 <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
@@ -380,7 +346,7 @@
                 <ScalarProperty Name="VehiclePrice" ColumnName="VehiclePrice" />
                 <ScalarProperty Name="Commission" ColumnName="Commission" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="VehicleIsActive" ColumnName="VehicleIsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
