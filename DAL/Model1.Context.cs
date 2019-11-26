@@ -13,10 +13,10 @@ namespace DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CarSalesEntities : DbContext
+    public partial class CarSalesDBEntities : DbContext
     {
-        public CarSalesEntities()
-            : base("name=CarSalesEntities")
+        public CarSalesDBEntities()
+            : base("name=CarSalesDBEntities")
         {
         }
     

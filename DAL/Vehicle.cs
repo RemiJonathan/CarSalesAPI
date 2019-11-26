@@ -25,10 +25,10 @@ namespace DAL
         public string VehicleYear { get; set; }
         public string VehicleManufacturer { get; set; }
         public string VehicleDescription { get; set; }
-        public Nullable<double> VehiclePrice { get; set; }
-        public Nullable<double> Commission { get; set; }
+        public Nullable<decimal> VehiclePrice { get; set; }
+        public Nullable<decimal> Commission { get; set; }
         public Nullable<int> Stock { get; set; }
-        public bool Active { get; set; }
+        public Nullable<bool> VehicleIsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
