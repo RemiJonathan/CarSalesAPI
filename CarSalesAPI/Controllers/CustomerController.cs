@@ -81,19 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiCustomer newCustomer)
         {
-            try
-            { 
+            
                 Customer c = new Customer();
+                /*db.Customers.Add(new Customer()
+                {
+
+                });*/
                 PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, c);
                 db.Customers.Add(c);
+            try
+            {
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
+                
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Customer, Try again.");
+                    "Cannot add new Customer, Try again." +e.StackTrace+"---" +e.InnerException);
             }
+            return Request.CreateResponse(HttpStatusCode.OK, "Customer added.");
         }
 
         // PUT api/<controller>/5
@@ -137,7 +143,7 @@ namespace CarSalesAPI.Controllers
 
                 entity.CustomerIsActive = false;
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, "Customer set as inactive.");
             }
             catch (Exception e)
             {
