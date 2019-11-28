@@ -1,9 +1,12 @@
-﻿using System;
+﻿using DAL;
+using DatabaseEntitiesLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Utils;
 
 namespace CarSalesAPI.Controllers
 {
@@ -12,35 +15,37 @@ namespace CarSalesAPI.Controllers
         CarSalesDBEntities db = new CarSalesDBEntities();
 
         // GET api/<controller>
-        [Route("api2/Salespersons")]
+        [Route("api2/Salesperson")]
         [HttpGet]
         public HttpResponseMessage Get()
         {
             try
             {
-                List<Salesperson> entities = db.Salesperson.ToList();
+                List<Salesperson> entities = db.Salespersons.ToList();
 
                 if (entities == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "No Sales People Found.");
+                        "No Salespersons Found.");
                 }
 
-                List<ApiSalesperson> apiSalesperson = new List<ApiSalesperson>();
+                List<ApiSalesperson> apiSalespersons = new List<ApiSalesperson>();
 
                 foreach (var record in entities)
                 {
                     ApiSalesperson apiSalesperson = new ApiSalesperson();
                     PropertyCopier<Salesperson, ApiSalesperson>.Copy(record, apiSalesperson);
-                    apiSalesperson.Add(apiSalesPerson);
+                    apiSalespersons.Add(apiSalesperson);
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, apiSalesperson);
+                return Request.CreateResponse(HttpStatusCode.OK, apiSalespersons);
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
                         "Error in the code");
             }
+
+
         }
 
         // GET api/<controller>/5
@@ -50,15 +55,15 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                var entity = db.Salesperson.Find(id);
+                var entity = db.Salespersons.Find(id);
 
                 if (entity == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Sales Person with Id " + id.ToString() + " not found.");
+                        "Salesperson with Id " + id.ToString() + " not found.");
                 }
 
-                var myApiSaleperson = new ApiSalesperson();
+                var myApiSalesperson = new ApiSalesperson();
 
                 PropertyCopier<Salesperson, ApiSalesperson>.Copy(entity, myApiSalesperson);
 
@@ -76,19 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiSalesperson newSalesperson)
         {
+
+            Salesperson c = new Salesperson();
+            /*db.Salespersons.Add(new Salesperson()
+            {
+
+            });*/
+            PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, c);
+            db.Salespersons.Add(c);
             try
             {
-                Salesperson s = new Salesperson();
-                PropertyCopier<ApiSaleperson, Salesperson>.Copy(newSalesperson, s);
-                db.Salesperson.Add(s);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
+
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Sales Person, Try again.");
+                    "Cannot add new Salesperson, Try again." + e.StackTrace + "---" + e.InnerException);
             }
+            return Request.CreateResponse(HttpStatusCode.OK, "Salesperson added.");
         }
 
         // PUT api/<controller>/5
@@ -98,19 +109,19 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                var entity = db.Salesperson.FirstOrDefault(x => x.SalespersonId == id);
+                var entity = db.Salespersons.FirstOrDefault(x => x.SalespersonId == id);
 
                 if (entity == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Sales Person with Id " + id.ToString() + " not found to update.");
+                        "Salesperson with Id " + id.ToString() + " not found to update.");
                 }
 
                 PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, entity);
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK,
-                    "Sales Person with Id " + id.ToString() + " found and updated.");
+                    "Salesperson with Id " + id.ToString() + " found and updated.");
             }
             catch (Exception e)
             {
@@ -121,13 +132,19 @@ namespace CarSalesAPI.Controllers
 
         // DELETE api/<controller>/5
         [Route("api2/Salesperson/{id?}")]
-        public HttpResponseMessage(int id)
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                db.Salesperson.Find(id).SalespersonIsActive = false;
+                var entity = db.Salespersons.Find(id);
+
+                if (entity == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, ("That Salesperson ID doesn't exist. Salesperson ID: {0} is incorrect.", id));
+
+                entity.SalespersonIsActive = false;
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, "Salesperson set as inactive.");
             }
             catch (Exception e)
             {

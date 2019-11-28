@@ -13,13 +13,13 @@ namespace DatabaseEntitiesLibrary
         public string SalespersonLname { get; set; }
         public string SalespersonEmail { get; set; }
         public string SalespersonPhone { get; set; }
-        public string SalespersonAddressCivicNo { get; set; }
-        public string SalespersonAddressStreetName { get; set; }
-        public string SalespersonAddressAppartment { get; set; }
-        public string SalespersonAddressCity { get; set; }
-        public string SalespersonAddressProvince { get; set; }
-        public string SalespersonAddressPostalCode { get; set; }
+        public string SalespersonCivicNo { get; set; }
+        public string SalespersonStreetName { get; set; }
+        public string SalespersonAppartment { get; set; }
+        public string SalespersonCity { get; set; }
+        public string SalespersonProvince { get; set; }
+        public string SalespersonPostalCode { get; set; }
         public int LocationId { get; set; }
-        public bool Active { get; set; }
+        public Nullable<bool> SalespersonIsActive { get; set; }
     }
 }

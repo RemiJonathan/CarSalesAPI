@@ -1,44 +1,140 @@
-﻿using System;
+﻿using DAL;
+using DatabaseEntitiesLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Utils;
 
 namespace CarSalesAPI.Controllers
 {
     public class SaleController : ApiController
     {
+        CarSalesDBEntities db = new CarSalesDBEntities();
+
         // GET api/<controller>
-        [Route("api2/GetSales")]
-        public IEnumerable<string> Get()
+        [Route("api2/Sale")]
+        [HttpGet]
+        public HttpResponseMessage Get()
         {
-            return new string[] { "value5", "value6" };
+            try
+            {
+                List<Sale> entities = db.Sales.ToList();
+
+                if (entities == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "No Sales Found.");
+                }
+
+                List<ApiSale> apiSales = new List<ApiSale>();
+
+                foreach (var record in entities)
+                {
+                    ApiSale apiSale = new ApiSale();
+                    PropertyCopier<Sale, ApiSale>.Copy(record, apiSale);
+                    apiSales.Add(apiSale);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, apiSales);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        "Error in the code");
+            }
+
+
         }
 
         // GET api/<controller>/5
-        [Route("api2/GetSale/{id?}")]
-        public string Get(int id)
+        [Route("api2/Sale/{id?}")]
+        [HttpGet]
+        public HttpResponseMessage Get(int id)
         {
-            return "value";
+            try
+            {
+                var entity = db.Sales.Find(id);
+
+                if (entity == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Sale with Id " + id.ToString() + " not found.");
+                }
+
+                var myApiSale = new ApiSale();
+
+                PropertyCopier<Sale, ApiSale>.Copy(entity, myApiSale);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myApiSale);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                         "Error in the code");
+            }
         }
 
         // POST api/<controller>
-        [Route("api2/AddSale")]
-        public void Post([FromBody]string value)
+        [Route("api2/Sale")]
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody]ApiSale newSale)
         {
+
+            Sale c = new Sale();
+            /*db.Sales.Add(new Sale()
+            {
+
+            });*/
+            PropertyCopier<ApiSale, Sale>.Copy(newSale, c);
+            db.Sales.Add(c);
+            try
+            {
+                db.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                    "Cannot add new Sale, Try again." + e.StackTrace + "---" + e.InnerException);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Sale added.");
         }
 
         // PUT api/<controller>/5
-        [Route("api2/UpdateSale/{id?}")]
-        public void Put(int id, [FromBody]string value)
+        [Route("api2/Sale/{id?}")]
+        [HttpPut]
+        public HttpResponseMessage Put(int id, [FromBody]ApiSale newSale)
         {
-        }
+            try
+            {
+                var entity = db.Sales.FirstOrDefault(x => x.SaleId == id);
 
-        // DELETE api/<controller>/5
-        [Route("api2/DeleteSale/{id?}")]
-        public void Delete(int id)
-        {
+                if (entity == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Sale with Id " + id.ToString() + " not found to update.");
+                }
+
+                PropertyCopier<ApiSale, Sale>.Copy(newSale, entity);
+                db.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    "Sale with Id " + id.ToString() + " found and updated.");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        "Error in the code");
+            }
         }
+        
+        /**************
+         * 
+         * 
+         * DELETE DOES NOT NEED TO BE IMPLEMENTED IN SALE, SINCE THERE IS NO ACTIVE FIELD.
+         * 
+         * ************/
     }
 }

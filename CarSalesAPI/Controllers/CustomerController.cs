@@ -81,19 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiCustomer newCustomer)
         {
-            try
-            { 
+            
                 Customer c = new Customer();
+                /*db.Customers.Add(new Customer()
+                {
+
+                });*/
                 PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, c);
                 db.Customers.Add(c);
+            try
+            {
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
+                
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Customer, Try again.");
+                    "Cannot add new Customer, Try again." +e.StackTrace+"---" +e.InnerException);
             }
+            return Request.CreateResponse(HttpStatusCode.OK, "Customer added.");
         }
 
         // PUT api/<controller>/5
@@ -128,13 +134,22 @@ namespace CarSalesAPI.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
-            var entity = db.Customers.Find(id);
+            try
+            {
+                var entity = db.Customers.Find(id);
 
-            if (entity == null) return Request.CreateResponse(HttpStatusCode.NotFound, ("That Customer ID doesn't exist. Customer ID: {0} is incorrect.", id));
-            /**/
-            entity.CustomerIsActive = false;
-            db.SaveChanges();
-            return Request.CreateResponse(HttpStatusCode.OK);
+                if (entity == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, ("That Customer ID doesn't exist. Customer ID: {0} is incorrect.", id));
+
+                entity.CustomerIsActive = false;
+                db.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, "Customer set as inactive.");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        "Error in the code");
+            }
         }
     }
 }

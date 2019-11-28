@@ -12,7 +12,7 @@
           <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerFname" Type="varchar" MaxLength="10" />
           <Property Name="CustomerLname" Type="varchar" MaxLength="20" />
-          <Property Name="CustomerEmail" Type="varchar" MaxLength="5" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="75" />
           <Property Name="CustomerPhone" Type="varchar" MaxLength="30" />
           <Property Name="CustomerCivicNo" Type="varchar" MaxLength="10" />
           <Property Name="CustomerStreetName" Type="varchar" MaxLength="20" />
@@ -51,7 +51,7 @@
           <Property Name="SalespersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SalespersonFname" Type="varchar" MaxLength="10" />
           <Property Name="SalespersonLname" Type="varchar" MaxLength="20" />
-          <Property Name="SalespersonEmail" Type="varchar" MaxLength="5" />
+          <Property Name="SalespersonEmail" Type="varchar" MaxLength="75" />
           <Property Name="SalespersonPhone" Type="varchar" MaxLength="30" />
           <Property Name="SalespersonCivicNo" Type="varchar" MaxLength="10" />
           <Property Name="SalespersonStreetName" Type="varchar" MaxLength="20" />
@@ -143,7 +143,7 @@
           <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerFname" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CustomerLname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerEmail" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="CustomerPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="CustomerCivicNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CustomerStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -186,7 +186,7 @@
           <Property Name="SalespersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SalespersonFname" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SalespersonLname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SalespersonEmail" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SalespersonEmail" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="SalespersonPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="SalespersonCivicNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SalespersonStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
