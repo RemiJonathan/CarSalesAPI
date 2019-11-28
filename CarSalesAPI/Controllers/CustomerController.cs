@@ -130,7 +130,12 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                db.Customers.Find(id).CustomerIsActive = false;
+                var entity = db.Customers.Find(id);
+
+                if (entity == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, ("That Customer ID doesn't exist. Customer ID: {0} is incorrect.", id));
+
+                entity.CustomerIsActive = false;
                 db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

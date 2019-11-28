@@ -13,9 +13,9 @@ namespace DatabaseEntitiesLibrary
         public string VehicleYear { get; set; }
         public string VehicleManufacturer { get; set; }
         public string VehicleDescription { get; set; }
-        public double VehiclePrice { get; set; }
-        public double Commission { get; set; }
-        public int Stock { get; set; }
-        public bool Active { get; set; }
+        public Nullable<decimal> VehiclePrice { get; set; }
+        public Nullable<decimal> Commission { get; set; }
+        public Nullable<int> Stock { get; set; }
+        public Nullable<bool> VehicleIsActive { get; set; }
     }
 }

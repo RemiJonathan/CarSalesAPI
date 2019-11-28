@@ -1,9 +1,12 @@
-﻿using System;
+﻿using DAL;
+using DatabaseEntitiesLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Utils;
 
 namespace CarSalesAPI.Controllers
 {
@@ -18,7 +21,7 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                List<Salesperson> entities = db.Salesperson.ToList();
+                List<Salesperson> entities = db.Salespersons.ToList();
 
                 if (entities == null)
                 {
@@ -26,15 +29,15 @@ namespace CarSalesAPI.Controllers
                         "No Sales People Found.");
                 }
 
-                List<ApiSalesperson> apiSalesperson = new List<ApiSalesperson>();
+                List<ApiSalesperson> apiSalespersons = new List<ApiSalesperson>();
 
                 foreach (var record in entities)
                 {
                     ApiSalesperson apiSalesperson = new ApiSalesperson();
                     PropertyCopier<Salesperson, ApiSalesperson>.Copy(record, apiSalesperson);
-                    apiSalesperson.Add(apiSalesPerson);
+                    apiSalespersons.Add(apiSalesperson);
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, apiSalesperson);
+                return Request.CreateResponse(HttpStatusCode.OK, apiSalespersons);
             }
             catch (Exception e)
             {
@@ -50,7 +53,7 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                var entity = db.Salesperson.Find(id);
+                var entity = db.Salespersons.Find(id);
 
                 if (entity == null)
                 {
@@ -58,7 +61,7 @@ namespace CarSalesAPI.Controllers
                         "Sales Person with Id " + id.ToString() + " not found.");
                 }
 
-                var myApiSaleperson = new ApiSalesperson();
+                var myApiSalesperson = new ApiSalesperson();
 
                 PropertyCopier<Salesperson, ApiSalesperson>.Copy(entity, myApiSalesperson);
 
@@ -79,8 +82,8 @@ namespace CarSalesAPI.Controllers
             try
             {
                 Salesperson s = new Salesperson();
-                PropertyCopier<ApiSaleperson, Salesperson>.Copy(newSalesperson, s);
-                db.Salesperson.Add(s);
+                PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, s);
+                db.Salespersons.Add(s);
                 db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -98,7 +101,7 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                var entity = db.Salesperson.FirstOrDefault(x => x.SalespersonId == id);
+                var entity = db.Salespersons.FirstOrDefault(x => x.SalespersonId == id);
 
                 if (entity == null)
                 {
@@ -121,11 +124,11 @@ namespace CarSalesAPI.Controllers
 
         // DELETE api/<controller>/5
         [Route("api2/Salesperson/{id?}")]
-        public HttpResponseMessage(int id)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                db.Salesperson.Find(id).SalespersonIsActive = false;
+                db.Salespersons.Find(id).SalespersonIsActive = false;
                 db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

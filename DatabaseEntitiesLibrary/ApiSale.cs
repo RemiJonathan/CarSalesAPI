@@ -11,6 +11,6 @@ namespace DatabaseEntitiesLibrary
         public int SaleId { get; set; }
         public int CustomerId { get; set; }
         public int SalespersonId { get; set; }
-        public int VechicleId { get; set; }
+        public int VehicleId { get; set; }
     }
 }

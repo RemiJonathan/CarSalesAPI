@@ -12,9 +12,9 @@ namespace DatabaseEntitiesLibrary
         public string LocationAddressCivicNo { get; set; }
         public string LocationAddressStreetName { get; set; }
         public string LocationAddressAppartment { get; set; }
-        public string LocationAddressCIty { get; set; }
+        public string LocationAddressCity { get; set; }
         public string LocationAddressProvince { get; set; }
         public string LocationAddressPostalCode { get; set; }
-        public bool LocationIsActive { get; set; }
+        public Nullable<bool> LocationIsActive { get; set; }
     }
 }
