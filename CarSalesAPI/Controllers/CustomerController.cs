@@ -81,23 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiCustomer newCustomer)
         {
-            
+            if (ModelState.IsValid)
+            {
                 Customer c = new Customer();
-                /*db.Customers.Add(new Customer()
-                {
-
-                });*/
                 PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, c);
                 db.Customers.Add(c);
-            try
-            {
-                db.SaveChanges();
-                
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Cannot add new Customer, Try again." + e.StackTrace + "---" + e.InnerException);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Customer, Try again." +e.StackTrace+"---" +e.InnerException);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Customer added.");
         }
