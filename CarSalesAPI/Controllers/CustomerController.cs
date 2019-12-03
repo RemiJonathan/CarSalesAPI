@@ -109,25 +109,33 @@ namespace CarSalesAPI.Controllers
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]ApiCustomer newCustomer)
         {
-            try
-            {
-                var entity = db.Customers.FirstOrDefault(x => x.CustomerId == id);
-
-                if (entity == null)
+            if (ModelState.IsValid)
+            { 
+                try
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Customer with Id " + id.ToString() + " not found to update.");
+                    var entity = db.Customers.FirstOrDefault(x => x.CustomerId == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                            "Customer with Id " + id.ToString() + " not found to update.");
+                    }
+
+                    PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, entity);
+                    db.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        "Customer with Id " + id.ToString() + " found and updated.");
                 }
-
-                PropertyCopier<ApiCustomer, Customer>.Copy(newCustomer, entity);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK,
-                    "Customer with Id " + id.ToString() + " found and updated.");
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Error in the code");
+                }
             }
-            catch(Exception e) {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        "Error in the code");
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
 

@@ -81,23 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiLocation newLocation)
         {
-
-            Location c = new Location();
-            /*db.Locations.Add(new Location()
+            if (ModelState.IsValid)
             {
+                Location c = new Location();
+                PropertyCopier<ApiLocation, Location>.Copy(newLocation, c);
+                db.Locations.Add(c);
+                try
+                {
+                    db.SaveChanges();
 
-            });*/
-            PropertyCopier<ApiLocation, Location>.Copy(newLocation, c);
-            db.Locations.Add(c);
-            try
-            {
-                db.SaveChanges();
-
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Cannot add new Location, Try again." + e.StackTrace + "---" + e.InnerException);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Location, Try again." + e.StackTrace + "---" + e.InnerException);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Location added.");
         }
@@ -107,26 +109,33 @@ namespace CarSalesAPI.Controllers
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]ApiLocation newLocation)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var entity = db.Locations.FirstOrDefault(x => x.LocationId == id);
-
-                if (entity == null)
+                try
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Location with Id " + id.ToString() + " not found to update.");
+                    var entity = db.Locations.FirstOrDefault(x => x.LocationId == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                            "Location with Id " + id.ToString() + " not found to update.");
+                    }
+
+                    PropertyCopier<ApiLocation, Location>.Copy(newLocation, entity);
+                    db.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        "Location with Id " + id.ToString() + " found and updated.");
                 }
-
-                PropertyCopier<ApiLocation, Location>.Copy(newLocation, entity);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK,
-                    "Location with Id " + id.ToString() + " found and updated.");
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Error in the code");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        "Error in the code");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
 

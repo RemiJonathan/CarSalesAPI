@@ -81,23 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiVehicle newVehicle)
         {
-
-            Vehicle c = new Vehicle();
-            /*db.Vehicles.Add(new Vehicle()
+            if (ModelState.IsValid)
             {
+                Vehicle c = new Vehicle();
+                PropertyCopier<ApiVehicle, Vehicle>.Copy(newVehicle, c);
+                db.Vehicles.Add(c);
+                try
+                {
+                    db.SaveChanges();
 
-            });*/
-            PropertyCopier<ApiVehicle, Vehicle>.Copy(newVehicle, c);
-            db.Vehicles.Add(c);
-            try
-            {
-                db.SaveChanges();
-
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Cannot add new Vehicle, Try again." + e.StackTrace + "---" + e.InnerException);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Vehicle, Try again." + e.StackTrace + "---" + e.InnerException);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Vehicle added.");
         }
@@ -107,26 +109,33 @@ namespace CarSalesAPI.Controllers
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]ApiVehicle newVehicle)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var entity = db.Vehicles.FirstOrDefault(x => x.VehicleId == id);
-
-                if (entity == null)
+                try
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Vehicle with Id " + id.ToString() + " not found to update.");
+                    var entity = db.Vehicles.FirstOrDefault(x => x.VehicleId == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                            "Vehicle with Id " + id.ToString() + " not found to update.");
+                    }
+
+                    PropertyCopier<ApiVehicle, Vehicle>.Copy(newVehicle, entity);
+                    db.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        "Vehicle with Id " + id.ToString() + " found and updated.");
                 }
-
-                PropertyCopier<ApiVehicle, Vehicle>.Copy(newVehicle, entity);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK,
-                    "Vehicle with Id " + id.ToString() + " found and updated.");
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Error in the code");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        "Error in the code");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
 

@@ -81,23 +81,25 @@ namespace CarSalesAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Post([FromBody]ApiSalesperson newSalesperson)
         {
-
-            Salesperson c = new Salesperson();
-            /*db.Salespersons.Add(new Salesperson()
+            if (ModelState.IsValid)
             {
+                Salesperson c = new Salesperson();
+                PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, c);
+                db.Salespersons.Add(c);
+                try
+                {
+                    db.SaveChanges();
 
-            });*/
-            PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, c);
-            db.Salespersons.Add(c);
-            try
-            {
-                db.SaveChanges();
-
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Cannot add new Salesperson, Try again." + e.StackTrace + "---" + e.InnerException);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Cannot add new Salesperson, Try again." + e.StackTrace + "---" + e.InnerException);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Salesperson added.");
         }
@@ -107,26 +109,33 @@ namespace CarSalesAPI.Controllers
         [HttpPut]
         public HttpResponseMessage Put(int id, [FromBody]ApiSalesperson newSalesperson)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var entity = db.Salespersons.FirstOrDefault(x => x.SalespersonId == id);
-
-                if (entity == null)
+                try
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Salesperson with Id " + id.ToString() + " not found to update.");
+                    var entity = db.Salespersons.FirstOrDefault(x => x.SalespersonId == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                            "Salesperson with Id " + id.ToString() + " not found to update.");
+                    }
+
+                    PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, entity);
+                    db.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        "Salesperson with Id " + id.ToString() + " found and updated.");
                 }
-
-                PropertyCopier<ApiSalesperson, Salesperson>.Copy(newSalesperson, entity);
-                db.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK,
-                    "Salesperson with Id " + id.ToString() + " found and updated.");
+                catch (Exception e)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Error in the code");
+                }
             }
-            catch (Exception e)
+            else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                        "Error in the code");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
 
