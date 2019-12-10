@@ -47,6 +47,7 @@ namespace DatabaseEntitiesLibrary
         [Required(ErrorMessage = "Salesperson Postal Code Required")]
         [MinLength(1, ErrorMessage = "Salesperson Postal Code Minimum Length 1")]
         [MaxLength(6, ErrorMessage = "Salesperson Postal Code Maximum Length 6")]
+        public string SalespersonPostalCode { get; set; }
         public int LocationId { get; set; }
         public Nullable<bool> SalespersonIsActive { get; set; }
     }
