@@ -21,7 +21,7 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                List<Location> entities = db.Locations.ToList();
+                List<Location> entities = db.Locations.Where(x => x.LocationIsActive == true).ToList();
 
                 if (entities == null)
                 {

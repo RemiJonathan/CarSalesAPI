@@ -21,7 +21,7 @@ namespace CarSalesAPI.Controllers
         {
             try
             {
-                List<Salesperson> entities = db.Salespersons.ToList();
+                List<Salesperson> entities = db.Salespersons.Where(x => x.SalespersonIsActive == true).ToList();
 
                 if (entities == null)
                 {
